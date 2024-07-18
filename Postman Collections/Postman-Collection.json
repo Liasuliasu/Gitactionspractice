@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "a167efe8-1de7-4a01-8dcd-88296851b087",
+		"name": "GoRest APIs Chaining",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create New User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "838f01c8-b089-4df1-a422-d3ab2cd9be24",
+						"exec": [
+							"// var random = Math.random().toString(36).substring(2);\r",
+							"\r",
+							"// var useremail = \"liasu\"+random+\"@gmail.com\";\r",
+							"// var username = \"Ayomide\"+random;\r",
+							"\r",
+							"// pm.environment.set(\"mail_env\",useremail);\r",
+							"// pm.environment.set(\"name_env\",username);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "11b495b1-b73b-4599-bd8d-9adeb9bef6e1",
+						"exec": [
+							"// Test to check if the request contains the authentication token in the headers\r",
+							"pm.test(\"Authentication token is present in the request headers\", function() {\r",
+							"    pm.expect(pm.request.headers.has('Authorization')).to.be.true;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "4861e133-acab-4bac-9b2c-e8edaccc449a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "c4cad73f30004f48d026b9b258053618e4bab6fb5998e9465d967d5e291edbda"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\":\"{{$randomFirstName}}\", \r\n\"gender\":\"male\",\r\n \"email\":\"{{$randomEmail}}\",\r\n \"status\":\"active\",\r\n \"createdAt\":\"{{$timestamp}}\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_Url}}/public/v2/users"
+			},
+			"response": []
+		},
+		{
+			"name": "Get New User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8b66fc49-ad75-4267-98be-69dc28c1c228",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"id\",jsonData.id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "77863b35-2a57-4a8c-8b7f-940c87ff19d2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://gorest.co.in/public/v2/users/6934634"
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"id": "e9b63110-1d77-4327-81eb-c38218935e1c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\":\"Tenali Ramakrishna\", \r\n\"gender\":\"male\",\r\n \"email\":\"tenali.ramakrishna@15ce.com\", \r\n\"status\":\"active\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://gorest.co.in/public/v2/users/2934651"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"id": "0275589c-e27f-404f-b7f9-c401b4e8ac83",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "https://gorest.co.in//public/v2/users/6934497"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "c4cad73f30004f48d026b9b258053618e4bab6fb5998e9465d967d5e291edbda"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "aaf7f6a3-73f0-48e2-b22f-394ff95bd75c",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "07ea2b7e-d3b2-48ef-b744-19f940b2ed3e",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "{{base_Url}}",
+			"value": "https://gorest.co.in",
+			"type": "string"
+		},
+		{
+			"key": "base_Url",
+			"value": "https://gorest.co.in"
+		}
+	]
+}
